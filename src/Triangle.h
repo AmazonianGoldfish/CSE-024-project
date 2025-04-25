@@ -3,13 +3,8 @@
 
 #include "Shape.h"
 class Triangle: public Shape{
-    float x;
-    float y;
     float base;
     float height;
-    float r;
-    float g;
-    float b;
 
 public:
     Triangle();

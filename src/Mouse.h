@@ -1,9 +1,6 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-class Mouse{
-
-
-};
+class Mouse {};
 
 #endif

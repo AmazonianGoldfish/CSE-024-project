@@ -10,6 +10,7 @@
 #include "Polygon.h"
 #include "Shape.h"
 #include "Scribble.h"
+#include "Color.h"
 #include "Enums.h"
 
 class Canvas : public bobcat::Canvas_{
@@ -17,7 +18,9 @@ class Canvas : public bobcat::Canvas_{
     std::vector <Point*> points;
     std::vector <TOOL> shape;
 
-    Scribble* curr;
+    Scribble* currentScribble;
+
+    int selected;
 
 public:
     Canvas (int x, int y, int w, int h);
@@ -36,7 +39,7 @@ public:
 
     void clear();
 
-    void mouse();
+    void mouse(float mouseX, float mouseY);
 
     void plus();
     
@@ -46,13 +49,21 @@ public:
 
     void sendToBack();
 
-    void startScribble();
+    void startScribble(float startX, float startY, Color color);
 
     void updateScribble(float x, float y, float r, float g,  float b, int size);
 
     void endScribble();
 
     void render();
+
+    int getSelected();
+
+    void deselectAll();
+
+    void dragShape(float mouseX, float mouseY);
+
+    void recolorShape(Color color);
 };
 
 #endif

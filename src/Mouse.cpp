@@ -1,5 +1,3 @@
 #include "Mouse.h"
-#include "Shape.h"
 #include "Point.h"
-
-
+#include "Shape.h"

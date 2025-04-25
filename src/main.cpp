@@ -1,8 +1,7 @@
 #include "Application.h"
 
 int main() {
+  Application app;
 
-    Application app;
-
-    return app.run();
+  return app.run();
 }

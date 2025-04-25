@@ -12,7 +12,7 @@ void Application::onCanvasMouseDown(bobcat::Widget* sender, float mx, float my){
     Color color = colorSelector->getColor();
 
     if (tool == PENCIL){
-        canvas->addPoint(mx, my, color.getR(), color.getG(), color.getB(), 7);
+        canvas->startScribble(mx, my, color);
         canvas->redraw();
     }
     else if (tool == ERASER){
@@ -36,7 +36,8 @@ void Application::onCanvasMouseDown(bobcat::Widget* sender, float mx, float my){
         canvas->redraw();
     }
     else if (tool == MOUSE){
-        //something
+        canvas->mouse(mx, my);
+        canvas->redraw();
     }
 }
 
@@ -45,7 +46,7 @@ void Application::onCanvasDrag(bobcat::Widget* sender, float mx, float my){
     Color color = colorSelector->getColor();
 
     if (tool == PENCIL){
-        canvas->addPoint(mx, my, color.getR(), color.getG(), color.getB(), 7);
+        canvas->updateScribble(mx, my, color.getR(), color.getG(), color.getB(), 7);
         canvas->redraw();
     }
     else if (tool == ERASER){
@@ -54,37 +55,55 @@ void Application::onCanvasDrag(bobcat::Widget* sender, float mx, float my){
         canvas->redraw();
     }
     else if (tool == MOUSE){
-        //something
+        canvas->dragShape(mx, my);
+        canvas->redraw();
+    }
+}
+
+void Application::onCanvasMouseUp(bobcat::Widget* sender, float mx, float my) {
+    if (toolbar->getTool() == PENCIL) {
+        canvas->endScribble();
+        canvas->redraw();
     }
 }
 
 void Application::onToolbarChange(bobcat::Widget* sender){
+    TOOL tool = toolbar->getTool();
     ACTION action = toolbar->getAction();
 
+    if (tool != MOUSE) {
+        canvas->deselectAll();
+    }
+
     if (action == CLEAR){
+        canvas->deselectAll();
         canvas->clear();
         canvas->redraw();
     }
     else if (action == PLUS){
-        //something
+        canvas->plus();
+        canvas->redraw();
     }
     else if (action == MINUS){
-        //something
+        canvas->minus();
+        canvas->redraw();
     }
     else if (action == FRONT){
-        //something
+        canvas->bringToFront();
+        canvas->redraw();
     }
     else if (action == BACK){
-        //something
+        canvas->sendToBack();
+        canvas->redraw();
     }
 
 }
 
 Application::Application() {
-    window = new Window(100, 100, 400, 400, "Pain Application");
+    window = new Window(100, 100, 400, 400, "Paint Application");
     toolbar = new Toolbar(0,0,50,350);
     canvas = new Canvas(25,0,375,350);
-    colorSelector = new ColorSelector(50,350,350,50);
+    colorSelector = new ColorSelector(50,350,350,50,canvas);
     colorSelector -> box(FL_BORDER_BOX);
 
     window->add(toolbar);
@@ -92,6 +111,7 @@ Application::Application() {
     window->add(colorSelector);
 
     ON_MOUSE_DOWN(canvas, Application::onCanvasMouseDown);
+    ON_MOUSE_UP(canvas, Application::onCanvasMouseUp);
     ON_DRAG(canvas, Application::onCanvasDrag);
     ON_CHANGE(toolbar, Application::onToolbarChange);
 
