@@ -82,11 +82,21 @@ void Canvas::minus() {
 }
 
 void Canvas::bringToFront() {
-
+    if (selected > -1 && selected < shapes.size()) {
+        Shape* shape = shapes[selected];
+        shapes.erase(shapes.begin() + selected);
+        shapes.push_back(shape);
+        selected = shapes.size() - 1;
+    }
 }
 
 void Canvas::sendToBack() {
-  // something
+  if (selected > -1 && selected < shapes.size()) {
+    Shape* shape = shapes[selected];
+        shapes.erase(shapes.begin() + selected);
+        shapes.insert(shapes.begin(), shape);
+        selected = 0;
+  }
 }
 
 void Canvas::undo() {
