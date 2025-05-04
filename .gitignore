@@ -1,0 +1,8 @@
+# binaries
+bin/
+
+# objects
+objects/
+
+# editor
+.vscode/
