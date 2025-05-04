@@ -63,6 +63,8 @@ public:
 
     void dragShape(float mouseX, float mouseY);
 
+    void eraseShape(float mouseX, float mouseY);
+
     void recolorShape(Color color);
 };
 

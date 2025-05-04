@@ -5,8 +5,8 @@
 Rectangle ::Rectangle() {
   x = 0.0;
   y = 0.0;
-  width = 0.4;
-  height = 0.4;
+  width = 0.2f;
+  height = 0.2f;
   r = 0.0;
   g = 0.0;
   b = 0.0;
@@ -15,8 +15,8 @@ Rectangle ::Rectangle() {
 Rectangle ::Rectangle(float x, float y, float r, float g, float b) {
   this->x = x;
   this->y = y;
-  width = 0.4;
-  height = 0.4;
+  width = 0.2f;
+  height = 0.2f;
   this->r = r;
   this->g = g;
   this->b = b;

@@ -140,6 +140,32 @@ void Canvas::dragShape(float mouseX, float mouseY) {
     }
 }
 
+void Canvas::eraseShape(float mouseX, float mouseY) {
+    Shape *shape = nullptr;
+
+    float nearestDistance = 1000.0f;
+    float maxDistance = 0.2f;
+
+    int target = -1;
+
+    for (unsigned int i = 0; i < shapes.size(); i++) {
+        shape = shapes[i];
+
+        float distance = sqrt(pow(mouseX - shape->getX(), 2) + pow(mouseY - shape->getY(), 2));
+
+        if (distance < nearestDistance && distance < maxDistance)
+        {
+            target = i;
+
+            nearestDistance = distance;
+        }
+    }
+
+    if (target > -1) {
+        shapes.erase(shapes.begin() + target);
+    }
+}
+
 void Canvas::recolorShape(Color color) {
     if (selected > -1) {
         shapes[selected]->setColor(color);
